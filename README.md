@@ -7,9 +7,11 @@ Execute these commands in your terminal:
 
 ```bash
 git clone https://github.com/YariKandy/globalstreaming.git
-cd global-streaming-search
+cd cd globalstreaming
 npm install
 npm run build
 npm run start
 ```
-open `localhost:8000` in your browser.
+open `localhost:8000` in your browser. or 
+ - Local:      http://0.0.0.0:8000
+ - Network:    http://100.64.100.6:8000
