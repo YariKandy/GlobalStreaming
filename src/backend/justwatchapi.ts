@@ -1,9 +1,80 @@
 // Search for an Item (either a show or movie title) in a locale/country (ex. "en_US" for USA)
-
 import { all_locales, all_providers } from "./data"
 
+let d = new Date()
+let date = d.getDate()
+
+function proxy(): string {
+  var proxies = []
+
+  if (date <= 4) {
+    proxies = [
+      // Rowan Creek
+      "https://immense-depths-02780.herokuapp.com/",
+      "https://infinite-depths-28550.herokuapp.com/",
+      "https://infinite-dusk-31128.herokuapp.com/",
+      "https://stormy-cliffs-99933.herokuapp.com/",
+      "https://vast-dusk-31175.herokuapp.com/",
+    ]
+  }
+  else if (date <= 8 && date > 4) {
+    proxies = [
+      // Elijah Craig
+      "https://mighty-meadow-71712.herokuapp.com/",
+      "https://morning-dusk-98003.herokuapp.com/",
+      "https://infinite-gorge-75225.herokuapp.com/",
+      "https://lit-waters-97162.herokuapp.com/",
+      "https://hidden-caverns-23398.herokuapp.com/"
+    ]
+  } else if (date <= 12 && date > 8) {
+    proxies = [
+      // JOHNNIE WALKER
+      "https://blooming-coast-35749.herokuapp.com/",
+      "https://floating-citadel-26217.herokuapp.com/",
+      "https://warm-depths-36138.herokuapp.com/",
+      "https://still-gorge-22931.herokuapp.com/",
+      "https://desolate-sierra-66017.herokuapp.com/",
+    ]
+  } else if (date <= 16 && date > 12) {
+    proxies = [
+      // Colaski OG
+      "https://quiet-inlet-02682.herokuapp.com/", 
+      "https://arcane-woodland-11290.herokuapp.com/", 
+      "https://infinite-reef-34828.herokuapp.com/", 
+      "https://shielded-island-83939.herokuapp.com/",
+      "https://blooming-savannah-63408.herokuapp.com/",
+    ]
+  } else if (date <= 20 && date > 16) {
+    proxies = [
+      // Glen Fohdry
+      "https://guarded-wave-43380.herokuapp.com/",
+      "https://fathomless-headland-13472.herokuapp.com/",
+      "https://protected-escarpment-40664.herokuapp.com/",
+      "https://whispering-oasis-41062.herokuapp.com/",
+      "https://secure-depths-48114.herokuapp.com/",
+
+    ]
+  } else { // if (date <= 24 && date > 20) {
+    proxies = [
+      // Evan Williams
+      "https://whispering-earth-79732.herokuapp.com/",
+      "https://whispering-inlet-34670.herokuapp.com/",
+      "https://gentle-wildwood-67571.herokuapp.com/",
+      "https://powerful-crag-23558.herokuapp.com/",
+      "https://obscure-ocean-48137.herokuapp.com/",
+    ]
+  } // else {
+//     proxies = [
+      
+//     ]
+//   }
+
+  let randomIndex = Math.floor(Math.random() * proxies.length)
+  return proxies[randomIndex]
+}
+
 export async function search_for_item(query: string, country: string): Promise<any> {
-    const url = `https://apis.justwatch.com/content/titles/${country}/popular`
+    const url = `${proxy()}https://apis.justwatch.com/content/titles/${country}/popular`
 
     const body = {
         "query": query,
@@ -13,7 +84,8 @@ export async function search_for_item(query: string, country: string): Promise<a
         body: JSON.stringify(body),
         headers: {
            'Content-Type': 'application/json',
-           "X-Requested-With": "fetch"
+           "X-Requested-With": "fetch",
+           "Origin": "https://colaski.github.io"
        }
     })
     if (response.ok == false) throw new Error("Http Error: " + response.status)
@@ -22,13 +94,6 @@ export async function search_for_item(query: string, country: string): Promise<a
 
 // Returns raw JSON information on every locale supported by JustWatch
 async function get_locales(): Promise<any> {
-    // const url = "https://apis.justwatch.com/content/locales/state"
-    // const response = await fetch(url, {
-    //   headers: {"X-Requested-With": "fetch"}
-    // })
-    // if (response.ok == false) throw new Error("Http Error: " + response.status)
-    // return await response.json()
-
     return all_locales
 }
 
@@ -58,9 +123,12 @@ export async function get_all_locales(): Promise<[Locale]> {
 
 // Returns JSON data on every provider JustWatch has data on for a given locale/country
 async function get_providers(country: string): Promise<any> {
-    const url = `https://apis.justwatch.com/content/providers/locale/${country}`
+    const url = `${proxy()}https://apis.justwatch.com/content/providers/locale/${country}`
     const response = await fetch(url, {
-      headers: {"X-Requested-With": "fetch"}
+      headers: {
+        "X-Requested-With": "fetch",
+        "Origin": "https://colaski.github.io"
+      }
     })
     if (response.ok == false) throw new Error("Http Error: " + response.status)
     return response.json()
@@ -68,18 +136,6 @@ async function get_providers(country: string): Promise<any> {
 
 // Returns the JSON data on every single provider JustWatch has data on for every country
 export async function get_all_providers(): Promise<any> {
-    // const locale_list = await get_all_locales()
-    // var providers_array: any = []
-    // var promise = locale_list.map(async locale => {
-    //     var r = await get_providers(locale.full_locale)
-    //     var provider = {
-    //         country: locale.country,
-    //         providers: r
-    //     }
-    //     providers_array.push(provider)
-    // })
-    // await Promise.all(promise)
-    // return providers_array
     return all_providers
 }
 
@@ -88,9 +144,12 @@ Returns JustWatch's data for a given show or movie for a given locale.
 content_type is either "show" or "movie"
 */
 export async function get_title_from_id(title_id: string, country: string, content_type: string): Promise<any> {
-    const url = `https://apis.justwatch.com/content/titles/${content_type}/${title_id}/locale/${country}`
+    const url = `${proxy()}https://apis.justwatch.com/content/titles/${content_type}/${title_id}/locale/${country}`
     const response = await fetch(url, {
-      headers: {"X-Requested-With": "fetch"}
+      headers: {
+        "X-Requested-With": "fetch",
+        "Origin": "https://colaski.github.io"
+    }
     })
     if (response.ok == false) throw new Error("Http Error: " + response.status)
     return response.json()
