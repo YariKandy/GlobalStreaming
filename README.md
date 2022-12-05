@@ -7,7 +7,7 @@ Execute these commands in your terminal:
 
 ```bash
 git clone https://github.com/YariKandy/globalstreaming.git
-cd cd globalstreaming
+cd globalstreaming
 npm install
 npm run build
 npm run start
