@@ -12,6 +12,6 @@ npm install
 npm run build
 npm run start
 ```
-open `localhost:8000` in your browser. or 
- - Local:      http://0.0.0.0:8000
+open `
+ - localhost:8000
  - Network:    http://100.64.100.6:8000
